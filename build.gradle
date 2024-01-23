@@ -11,6 +11,12 @@ java {
     sourceCompatibility = '17'
 }
 
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
 repositories {
     mavenCentral()
 }
@@ -20,7 +26,19 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     /* 쿠팡 파트너스 API */
     implementation 'commons-codec:commons-codec:1.14'
-    implementation 'org.apache.httpcomponents:httpclient:4.5.11'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+
+    /* 카카오톡 API */
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    /* Gson */
+    implementation 'com.google.code.gson:gson:2.10.1'
+    /* Session */
+    implementation 'org.springframework.session:spring-session-core'
+    /* Tomcat 권한 문제인지 주입이 안되서 파일로 저장 */
+    implementation files("libs/tomcat-servlet-api-11.jar")
 }
 
 tasks.named('test') {
