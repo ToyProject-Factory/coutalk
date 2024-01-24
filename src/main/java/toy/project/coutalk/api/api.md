@@ -7,6 +7,8 @@
 ### 카카오톡
 
 * [카카오톡 채널 API](https://developers.kakao.com/docs/latest/ko/index)
+* [카카오톡 Rest API 샘플코드](https://devtalk.kakao.com/t/java-rest-api/14543)
+* [카카오톡 Rest API 테스트 도구](https://developers.kakao.com/tool/rest-api/open/post/v1-user-logout)
 
 ### 구글
 
