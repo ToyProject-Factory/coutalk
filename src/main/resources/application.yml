@@ -1,0 +1,28 @@
+# 카카오톡 API 연동 정보
+rest-api-key: b6638abbb873d7f6fb85fd2dcf264af9
+redirect-uri: http://localhost:8080/login-callback
+client-secret:
+authorize-uri: https://kauth.kakao.com/oauth/authorize
+token-uri: https://kauth.kakao.com/oauth/token
+kakao-api-host: https://kapi.kakao.com
+
+# JPA 연동 정보
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/coutalk
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+
+logging:
+  level:
+    org.hibernate.SQL : debug
+    org.hibernate.type: trace
+
