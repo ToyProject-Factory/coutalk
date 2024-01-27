@@ -14,3 +14,10 @@
 
 * [구글 어시스턴트 API](https://developers.google.com/apps-script?hl=ko)
 * [구글 설문지 DB 연동 참고자료](https://min9nim.vercel.app/2020-11-30-google-form-script/)
+
+### 웹 크롤링
+
+* [jsoup](https://jsoup.org/)
+* [selenium](https://www.selenium.dev/)
+* [WebDriverManager](https://bonigarcia.dev/webdrivermanager/)
+* [WebDriverManager-github](https://github.com/bonigarcia/webdrivermanager-spring-boot)
