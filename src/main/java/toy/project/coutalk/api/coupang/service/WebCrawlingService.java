@@ -1,6 +1,6 @@
 package toy.project.coutalk.api.coupang.service;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import lombok.RequiredArgsConstructor;
 import org.jsoup.nodes.Document;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -8,8 +8,11 @@ import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Service;
+
+import java.time.Duration;
 
 /**
  *  데이터 크롤링.
@@ -22,22 +25,10 @@ import org.springframework.stereotype.Service;
  * @author : nuclearmonkey21
  */
 @Service
+@RequiredArgsConstructor
 public class WebCrawlingService {
 
-    @Autowired
     private final WebDriver driver;
-    /**
-     * 생성자
-     *
-     * <p>
-     *     WebDriverManager에서 chromedriver를 설정하는것과  WebDriver의 의존성 주입
-     * </p>
-     * @param : webDriver: 의존성 주입을 위한 파리미터.
-     */
-    public WebCrawlingService(WebDriver webDriver) {
-        WebDriverManager.chromedriver().setup();
-        this.driver = webDriver;
-    }
     /**
      *  .
      *
@@ -55,7 +46,11 @@ public class WebCrawlingService {
             driver.get("https://www.coupang.com/np/search?component=&q=" + keyword + "&channel=auto");
 
             String xpathExpression = "//ul[@id='productList']";
-            WebElement productList = driver.findElement(By.xpath(xpathExpression));
+
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebElement productList = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//ul[@id='productList']")));
+
+            //WebElement productList = driver.findElement(By.xpath(xpathExpression));
 
             Document document = Jsoup.parse(productList.getAttribute("outerHTML"));
 
