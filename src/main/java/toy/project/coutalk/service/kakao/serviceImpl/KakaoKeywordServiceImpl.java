@@ -1,19 +1,20 @@
-package toy.project.coutalk.jpa.service;
+package toy.project.coutalk.service.kakao.serviceImpl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import toy.project.coutalk.jpa.domain.KakaoKeyword;
 import toy.project.coutalk.jpa.repository.KakaoKeywordRepository;
+import toy.project.coutalk.service.kakao.KakaoKeywordService;
 
 import java.util.List;
 import java.util.Optional;
 
 
 @Service
-public class KakaoKeywordService {
+@RequiredArgsConstructor
+public class KakaoKeywordServiceImpl implements KakaoKeywordService {
 
-    @Autowired
-    KakaoKeywordRepository kakaoKeywordRepository;
+    private final KakaoKeywordRepository kakaoKeywordRepository;
 
     public KakaoKeyword saveKakaoKeyword(KakaoKeyword kakaoKeyword) {
         return kakaoKeywordRepository.save(kakaoKeyword);
@@ -30,6 +31,7 @@ public class KakaoKeywordService {
     public void deleteKakaoKeyword(String id) {
         kakaoKeywordRepository.deleteById(id);
     }
+
     public List<KakaoKeyword> getKakaoKeywordByKeyword(String keyword) {
         return kakaoKeywordRepository.findByKeyword(keyword);
     }

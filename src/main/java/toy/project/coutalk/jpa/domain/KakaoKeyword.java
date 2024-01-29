@@ -1,12 +1,12 @@
 package toy.project.coutalk.jpa.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
-@Setter
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 @Table(name = "kakao_keyword")
 public class KakaoKeyword {
     @Id

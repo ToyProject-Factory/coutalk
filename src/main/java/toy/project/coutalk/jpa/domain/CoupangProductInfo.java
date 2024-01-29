@@ -1,13 +1,13 @@
 package toy.project.coutalk.jpa.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
 @Getter
-@Setter
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 @Table(name = "coupang_product_info")
 public class CoupangProductInfo {
     @Id

@@ -1,13 +1,13 @@
 package toy.project.coutalk.jpa.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 @Getter
-@Setter
 @Entity
+@NoArgsConstructor
+@ToString
 @Table(name = "kakao_user")
 public class KakaoUser {
 
