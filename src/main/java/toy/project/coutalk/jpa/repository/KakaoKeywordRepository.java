@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface KakaoKeywordRepository extends JpaRepository<KakaoKeyword, String> {
     List<KakaoKeyword> findByKeyword(String keyword);
+
+    void deleteByKakaoId(String kakaoId);
 }

@@ -4,12 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import toy.project.coutalk.jpa.domain.CoupangProductInfo;
 import toy.project.coutalk.jpa.repository.CoupangProductInfoRepository;
+import toy.project.coutalk.service.coupang.CoupangProductInfoService;
 
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class CoupangProductInfoServiceImpl {
+public class CoupangProductInfoServiceImpl implements CoupangProductInfoService {
 
     private final CoupangProductInfoRepository coupangProductInfoRepository;
 

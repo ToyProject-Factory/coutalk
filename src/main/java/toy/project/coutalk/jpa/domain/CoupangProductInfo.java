@@ -4,10 +4,13 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
-@Getter
+
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @ToString
+@Builder
 @Table(name = "coupang_product_info")
 public class CoupangProductInfo {
     @Id

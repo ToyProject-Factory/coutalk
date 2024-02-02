@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 쿠팡 상품 서비스
  */
-interface CoupangProductInfoService {
+public interface CoupangProductInfoService {
     
     /* 쿠팡 상품 등록 */
     CoupangProductInfo saveCoupangProductInfo(CoupangProductInfo coupangProductInfo);

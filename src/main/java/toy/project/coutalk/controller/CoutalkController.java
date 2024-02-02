@@ -1,28 +1,25 @@
 package toy.project.coutalk.controller;
 
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import toy.project.coutalk.service.coupang.serviceImpl.CoupangProductInfoServiceImpl;
-import toy.project.coutalk.service.kakao.serviceImpl.KakaoKeywordServiceImpl;
-import toy.project.coutalk.service.kakao.serviceImpl.KakaoUserServiceImpl;
+import toy.project.coutalk.service.coupang.CoupangProductInfoService;
+import toy.project.coutalk.service.kakao.KakaoKeywordService;
+import toy.project.coutalk.service.kakao.KakaoUserService;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/coutalk")
 public class CoutalkController {
 
-    final KakaoKeywordServiceImpl kakaoKeywordServiceImpl;
-    final KakaoUserServiceImpl kakaoUserServiceImpl;
-    final CoupangProductInfoServiceImpl coupangProductInfoServiceImpl;
-
-    public CoutalkController(KakaoKeywordServiceImpl kakaoKeywordServiceImpl, KakaoUserServiceImpl kakaoUserServiceImpl, CoupangProductInfoServiceImpl coupangProductInfoServiceImpl) {
-        this.kakaoKeywordServiceImpl = kakaoKeywordServiceImpl;
-        this.kakaoUserServiceImpl = kakaoUserServiceImpl;
-        this.coupangProductInfoServiceImpl = coupangProductInfoServiceImpl;
-    }
+    final KakaoKeywordService kakaoKeywordService;
+    final KakaoUserService kakaoUserService;
+    final CoupangProductInfoService coupangProductInfoService;
 
     @RequestMapping("/start")
     public void start(){
+        System.out.println(kakaoKeywordService.getAllKakaoKeyword());
         
     }
 
