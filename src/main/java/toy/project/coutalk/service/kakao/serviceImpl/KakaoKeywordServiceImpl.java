@@ -51,6 +51,7 @@ public class KakaoKeywordServiceImpl implements KakaoKeywordService {
             KakaoKeyword kakaoKeyword = KakaoKeyword.builder()
                     .kakaoId(kakaoId)
                     .keyword(key.trim())
+                    .etc("split")
                     .build();
             this.saveKakaoKeyword(kakaoKeyword);
         });

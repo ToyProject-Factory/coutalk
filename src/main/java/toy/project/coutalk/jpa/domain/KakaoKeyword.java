@@ -25,6 +25,13 @@ public class KakaoKeyword implements Persistable {
 
     private String keyword;
 
+    /*
+    * 입력데이터 확인용
+    * original - 구글폼 입력값
+    * split - 키워드 분할값
+    * */
+    private String etc;
+
     @ManyToOne
     private KakaoUser kakaoUser;
 

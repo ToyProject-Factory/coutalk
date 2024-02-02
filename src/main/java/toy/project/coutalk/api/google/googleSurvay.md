@@ -37,7 +37,8 @@
         isPersonalSecurity: isPersonalSecurity,
         kakaoKeyword : [{
             kakaoId : kakaoId,
-            keyword : kakaoKeyword
+            keyword : kakaoKeyword,
+            etc : "original"
         }]
     }
     
