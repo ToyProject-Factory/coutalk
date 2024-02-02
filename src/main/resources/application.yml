@@ -6,22 +6,29 @@ authorize-uri: https://kauth.kakao.com/oauth/authorize
 token-uri: https://kauth.kakao.com/oauth/token
 kakao-api-host: https://kapi.kakao.com
 
+server:
+  port: 8080
+
 # JPA 연동 정보
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/coutalk
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: 'jdbc:mysql://localhost:3306/coutalk?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul'
+    username: root
+    password: root@1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
+        show_sql: :true
+        highlight_sql : true
+        dialect: org.hibernate.dialect.MySQL8Dialect
 
 logging:
   level:
     org.hibernate.SQL : debug
     org.hibernate.type: trace
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE

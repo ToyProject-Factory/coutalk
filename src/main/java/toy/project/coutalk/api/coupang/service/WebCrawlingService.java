@@ -1,6 +1,6 @@
 package toy.project.coutalk.api.coupang.service;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import lombok.RequiredArgsConstructor;
 import org.jsoup.nodes.Document;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -8,11 +8,10 @@ import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Service;
+
 import java.time.Duration;
 
 /**
@@ -26,31 +25,10 @@ import java.time.Duration;
  * @author : nuclearmonkey21
  */
 @Service
+@RequiredArgsConstructor
 public class WebCrawlingService {
-    /**
-     *  .
-     *
-     *  <p>
-     *      WebDriver 셋업
-     *  </p>
-     *
-     * @return : WebDriver 객체.
-     */
-    private WebDriver setDriver() {
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();
-        //options.addArguments("--headless=new");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--disable-gpu");
-        options.addArguments("--disable-popup-blocking");
-        options.addArguments("--start-maximized");
-        options.addArguments("--window-size=1920,1080");
-        System.setProperty("webDriver.chrome.driver", "path/to/chromedriver");
-        System.setProperty("java.awt.headless", "false");
-        System.setProperty("DISPLAY", ":99");
-        return new ChromeDriver(options);
-    }
+
+    private final WebDriver driver;
     /**
      *  .
      *
@@ -63,7 +41,6 @@ public class WebCrawlingService {
      * @throws : 제품이 null -> NullPointException
      */
     public void getItemInfo(String keyword) {
-        WebDriver driver = setDriver();
         try {
             //todo : 쿠팡 이 외에 다른 사이트도 추가 가능성 있기에 차후 변경
             driver.get("https://www.coupang.com/np/search?component=&q=" + keyword + "&channel=auto");
