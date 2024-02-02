@@ -8,16 +8,27 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import toy.project.coutalk.api.coupang.service.WebCrawlingService;
 
 class WebCrawlingServiceTest {
-
+    WebDriver driver;
     WebCrawlingService webCrawlingService;
 
     @BeforeEach
     void setupTest() {
-        webCrawlingService = new WebCrawlingService();
+        ChromeOptions options = new ChromeOptions();
+        //options.addArguments("--headless=new");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--disable-popup-blocking");
+        options.addArguments("--start-maximized");
+        options.addArguments("--window-size=1920,1080");
+        driver = new ChromeDriver(options);
+        webCrawlingService = new WebCrawlingService(driver);
     }
 
     @AfterEach
-    void tearDown() { }
+    void tearDown() {
+        driver.quit();
+    }
 
     @Test
     void test() {
