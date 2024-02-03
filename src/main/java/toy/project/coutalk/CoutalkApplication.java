@@ -14,5 +14,4 @@ public class CoutalkApplication {
     public static void main(String[] args) {
         SpringApplication.run(CoutalkApplication.class, args);
     }
-
 }

@@ -57,5 +57,12 @@ public class CoupangProductInfo {
     /* 도착정보 */
     private String delivery;
 
+    /* 리뷰 수 */
+    private int reviewCount;
 
+    /* 쿠팡 파트너스 URL */
+    private String partnersUrl;
+
+    /* 쿠팡 상품 URL */
+    private String productUrl;
 }

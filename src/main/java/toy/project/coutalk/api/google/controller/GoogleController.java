@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import toy.project.coutalk.api.coupang.service.CoupangService;
 import toy.project.coutalk.api.coupang.service.WebCrawlingService;
+import toy.project.coutalk.jpa.domain.CoupangProductInfo;
 import toy.project.coutalk.jpa.domain.KakaoKeyword;
 import toy.project.coutalk.jpa.domain.KakaoUser;
 import toy.project.coutalk.service.coupang.CoupangProductInfoService;
@@ -12,6 +13,7 @@ import toy.project.coutalk.service.kakao.KakaoKeywordService;
 import toy.project.coutalk.service.kakao.KakaoUserService;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,7 +36,9 @@ public class GoogleController {
          kakaoKeywordService.splitKeyword(kakaoUser);
 
          /* 쿠팡 키워드 수집 시작 */
-         coupangService.productCollect(kakaoUser);
+        coupangService.productCollect(kakaoUser);
+
+
 
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 public interface CoupangProductInfoService {
     
     /* 쿠팡 상품 등록 */
-    CoupangProductInfo saveCoupangProductInfo(CoupangProductInfo coupangProductInfo);
+    CoupangProductInfo save(CoupangProductInfo coupangProductInfo);
 
     /* 쿠팡 상품 전체 조회 */
     List<CoupangProductInfo> getAllCoupangProductInfo();

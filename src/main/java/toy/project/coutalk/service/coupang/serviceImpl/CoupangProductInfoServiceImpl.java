@@ -14,7 +14,7 @@ public class CoupangProductInfoServiceImpl implements CoupangProductInfoService 
 
     private final CoupangProductInfoRepository coupangProductInfoRepository;
 
-    public CoupangProductInfo saveCoupangProductInfo(toy.project.coutalk.jpa.domain.CoupangProductInfo coupangProductInfo) {
+    public CoupangProductInfo save(toy.project.coutalk.jpa.domain.CoupangProductInfo coupangProductInfo) {
         return coupangProductInfoRepository.save(coupangProductInfo);
     }
 

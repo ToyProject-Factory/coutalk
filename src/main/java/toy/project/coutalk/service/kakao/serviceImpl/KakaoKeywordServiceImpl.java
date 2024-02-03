@@ -48,12 +48,14 @@ public class KakaoKeywordServiceImpl implements KakaoKeywordService {
 
         this.deleteKakaoId(kakaoId);
         Arrays.stream(keywordArr).forEach(key -> {
-            KakaoKeyword kakaoKeyword = KakaoKeyword.builder()
-                    .kakaoId(kakaoId)
-                    .keyword(key.trim())
-                    .etc("split")
-                    .build();
-            this.saveKakaoKeyword(kakaoKeyword);
+            if(!key.trim().isEmpty()) {
+                KakaoKeyword kakaoKeyword = KakaoKeyword.builder()
+                        .kakaoId(kakaoId)
+                        .keyword(key.trim())
+                        .etc("split")
+                        .build();
+                this.saveKakaoKeyword(kakaoKeyword);
+            }
         });
     }
 }

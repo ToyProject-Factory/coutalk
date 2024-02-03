@@ -1,5 +1,6 @@
 package toy.project.coutalk.api.coupang.service;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.nodes.Document;
 import org.jsoup.Jsoup;
@@ -8,11 +9,18 @@ import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Service;
+import toy.project.coutalk.jpa.domain.CoupangProductInfo;
+import toy.project.coutalk.jpa.domain.KakaoKeyword;
+import toy.project.coutalk.service.coupang.CoupangProductInfoService;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *  데이터 크롤링.
@@ -28,7 +36,34 @@ import java.time.Duration;
 @RequiredArgsConstructor
 public class WebCrawlingService {
 
-    private final WebDriver driver;
+    final CoupangProductInfoService coupangProductInfoService;
+    /**
+     *  .
+     *
+     *  <p>
+     *      WebDriver 셋업
+     *  </p>
+     *
+     * @return : WebDriver 객체.
+     */
+    private WebDriver setDriver() {
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions options = new ChromeOptions();
+        // options.addArguments("--headless");
+
+        /* headless 옵션 차단 방어 */
+        //options.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--disable-popup-blocking");
+        // options.addArguments("--start-maximized");
+        options.addArguments("--window-size=10,10");
+        System.setProperty("webDriver.chrome.driver", "path/to/chromedriver");
+        System.setProperty("java.awt.headless", "false");
+        System.setProperty("DISPLAY", ":99");
+        return new ChromeDriver(options);
+    }
     /**
      *  .
      *
@@ -40,7 +75,10 @@ public class WebCrawlingService {
      * @return : 현재는 콘솔 출력으로 나타남.
      * @throws : 제품이 null -> NullPointException
      */
-    public void getItemInfo(String keyword) {
+    public List<CoupangProductInfo> getItemInfo(String keyword) {
+        WebDriver driver = setDriver();
+        List<CoupangProductInfo> coupangProductInfoList = new ArrayList<>();
+
         try {
             //todo : 쿠팡 이 외에 다른 사이트도 추가 가능성 있기에 차후 변경
             driver.get("https://www.coupang.com/np/search?component=&q=" + keyword + "&channel=auto");
@@ -79,6 +117,20 @@ public class WebCrawlingService {
                 System.out.println("Card discount information: " + cardDiscount);
                 System.out.println("Reward information: " + rewardInfo);
                 System.out.println("Delivery information: " + deliveryInfo);
+
+                CoupangProductInfo coupangProductInfo =  CoupangProductInfo.builder()
+                        .keyword(keyword)
+                        .productName(productName)
+                        .originalPrice(Integer.parseInt(originalPrice))
+                        .nowPrice(Integer.parseInt(salePrice))
+                        .rating(Double.parseDouble(rating))
+                        .reviewCount(Integer.parseInt(reviewCount))
+                        .reward(rewardInfo)
+                        .delivery(deliveryInfo)
+                        .build();
+
+                coupangProductInfoList.add(coupangProductInfo);
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -86,5 +138,7 @@ public class WebCrawlingService {
             // Close the WebDriver when done
             driver.quit();
         }
+
+        return coupangProductInfoList;
     }
 }
