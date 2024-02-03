@@ -14,4 +14,6 @@ public interface KakaoUserService {
 
     /* 카카오 사용자 리스트 조회 */
     public List<KakaoUser> getAllKakaoUser();
+
+    String findKakaoId(String kakaoId);
 }

@@ -13,10 +13,10 @@ import org.antlr.v4.runtime.misc.NotNull;
 @Builder
 @Table(name = "coupang_product_info")
 public class CoupangProductInfo {
+
+    /* 상품코드 */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    private long productId;
 
     /* 상품 타입 :
      0 : 키워드
@@ -24,7 +24,7 @@ public class CoupangProductInfo {
      2 : 인기순위
      */
     @NotNull
-    private int Type;
+    private int type;
 
     /* 키워드 */
     private String keyword;

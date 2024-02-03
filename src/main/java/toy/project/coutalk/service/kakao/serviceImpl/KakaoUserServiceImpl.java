@@ -31,4 +31,9 @@ public class KakaoUserServiceImpl implements KakaoUserService {
     public List<KakaoUser> getAllKakaoUser() {
         return kakaoUserRepository.findAll();
     }
+
+    @Override
+    public String findKakaoId(String kakaoId) {
+        return kakaoUserRepository.findKakaoUserByKakaoId(kakaoId);
+    }
 }

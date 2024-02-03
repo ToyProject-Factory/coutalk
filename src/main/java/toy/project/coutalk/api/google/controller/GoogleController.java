@@ -25,20 +25,30 @@ public class GoogleController {
     final CoupangProductInfoService coupangProductInfoService;
     final CoupangService coupangService;
 
-    /* 구글 설문지 정보 */
+    /* 구글 설문지 정보 등록 및 수정 */
     @RequestMapping("api/googleSurvey")
     public void googleSurvey(@RequestBody KakaoUser kakaoUser){
-         System.out.println("kakaoUser : " + kakaoUser);
-         /* 카카오 사용자 등록 */
-         kakaoUserService.saveKakaoUser(kakaoUser);
+        System.out.println("kakaoUser : " + kakaoUser);
+        /* 사용자 정보 조회 */
+        String kakaoId = kakaoUserService.findKakaoId(kakaoUser.getKakaoId());
 
-         /* 키워드 개별 등록 */
-         kakaoKeywordService.splitKeyword(kakaoUser);
-
-         /* 쿠팡 키워드 수집 시작 */
-        coupangService.productCollect(kakaoUser);
-
-
-
+        /* 개인정보 수집 및 사용 동의
+        * 0 - 미동의
+        * 1 - 동의
+        * */
+        if(kakaoUser.getIsPersonalSecurity() == 0){
+            /* 등록된 사용자가 있으면 사용자 정보 수정 */
+            if(!kakaoId.isEmpty()){
+                /* 카카오 사용자 정보 수정 */
+                kakaoUserService.saveKakaoUser(kakaoUser);
+            }
+        }else {
+            /* 카카오 사용자 정보 등록 */
+            kakaoUserService.saveKakaoUser(kakaoUser);
+            /* 키워드 개별 등록 */
+            kakaoKeywordService.splitKeyword(kakaoUser);
+            /* 쿠팡 키워드 수집 시작 */
+            coupangService.productCollect(kakaoUser);
+        }
     }
 }

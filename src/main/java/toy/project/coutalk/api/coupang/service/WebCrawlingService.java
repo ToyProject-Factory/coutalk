@@ -98,6 +98,7 @@ public class WebCrawlingService {
                     continue;
                 }
                 //todo : 차후 데이터의 활용도에 맞게 수정
+                String productId = product.attributes().get("data-product-id");
                 String productName = product.select("div.name").text().trim();
                 String originalPrice = product.select("del.base-price").text().trim();
                 String salePrice = product.select("strong.price-value").text().trim();
@@ -110,6 +111,7 @@ public class WebCrawlingService {
                 // Print or process the product information as needed
                 System.out.println('-' + "-".repeat(39));
                 System.out.println("Product Name: " + productName);
+                System.out.println("Product Id: " + productId);
                 System.out.println("Original price: " + originalPrice);
                 System.out.println("Sale price: " + salePrice);
                 System.out.println("Star rating: " + rating);
@@ -118,13 +120,24 @@ public class WebCrawlingService {
                 System.out.println("Reward information: " + rewardInfo);
                 System.out.println("Delivery information: " + deliveryInfo);
 
+                /* 데이터 가공 */
+                originalPrice = originalPrice.replaceAll("[^0-9]","");
+                salePrice = salePrice.replaceAll("[^0-9]","");
+                reviewCount = reviewCount.replaceAll("[^0-9]","");
+                System.out.println("변경 전 productId : " + productId);
+                productId = productId.replaceAll("[^0-9]","");
+                System.out.println("변경 후 productId : " + productId);
+
+                /* 상품 정보 등록 */
                 CoupangProductInfo coupangProductInfo =  CoupangProductInfo.builder()
+                        .productId(Long.parseLong(productId))
                         .keyword(keyword)
+                        .type(0)
                         .productName(productName)
-                        .originalPrice(Integer.parseInt(originalPrice))
-                        .nowPrice(Integer.parseInt(salePrice))
-                        .rating(Double.parseDouble(rating))
-                        .reviewCount(Integer.parseInt(reviewCount))
+                        .originalPrice(originalPrice.isEmpty() ? 0 : Integer.parseInt(originalPrice))
+                        .nowPrice(salePrice.isEmpty() ? 0 : Integer.parseInt(salePrice))
+                        .rating(rating.isEmpty() ? 0 : Double.parseDouble(rating))
+                        .reviewCount(reviewCount.isEmpty() ? 0 : Integer.parseInt(reviewCount))
                         .reward(rewardInfo)
                         .delivery(deliveryInfo)
                         .build();
