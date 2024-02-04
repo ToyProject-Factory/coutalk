@@ -97,8 +97,16 @@ public class WebCrawlingService {
                 if (!product.select(".search-product__ad-badge").isEmpty()) {
                     continue;
                 }
+                /* 키워드 랭킹만 가져오기 */
+                if(product.select("span.number").isEmpty()){
+                    continue;
+                }
                 //todo : 차후 데이터의 활용도에 맞게 수정
-                String productId = product.attributes().get("data-product-id");
+
+                String productId = product.select("a.search-product-link").attr("data-product-id");
+                String vendorId = product.select("a.search-product-link").attr("data-vendor-item-id");
+                String itemId = product.select("a.search-product-link").attr("data-item-id");
+                String productRank = product.select("span.number").text().trim();
                 String productName = product.select("div.name").text().trim();
                 String originalPrice = product.select("del.base-price").text().trim();
                 String salePrice = product.select("strong.price-value").text().trim();
@@ -107,11 +115,14 @@ public class WebCrawlingService {
                 String cardDiscount = product.select("span.ccid-txt").text().trim().isEmpty() ? "N/A" : product.select("span.ccid-txt").text().trim();
                 String rewardInfo = product.select("span.reward-cash-txt").text().trim().isEmpty() ? "N/A" : product.select("span.reward-cash-txt").text().trim();
                 String deliveryInfo = product.select("span.arrival-info").text().trim();
+                String productUrl = "https://www.coupang.com"+product.select("a.search-product-link").attr("href");
 
                 // Print or process the product information as needed
                 System.out.println('-' + "-".repeat(39));
                 System.out.println("Product Name: " + productName);
                 System.out.println("Product Id: " + productId);
+                System.out.println("vendorId : " + vendorId);
+                System.out.println("itemId : " + itemId);
                 System.out.println("Original price: " + originalPrice);
                 System.out.println("Sale price: " + salePrice);
                 System.out.println("Star rating: " + rating);
@@ -119,18 +130,19 @@ public class WebCrawlingService {
                 System.out.println("Card discount information: " + cardDiscount);
                 System.out.println("Reward information: " + rewardInfo);
                 System.out.println("Delivery information: " + deliveryInfo);
+                System.out.println("ProductUrl infomation: " + productUrl);
 
                 /* 데이터 가공 */
                 originalPrice = originalPrice.replaceAll("[^0-9]","");
                 salePrice = salePrice.replaceAll("[^0-9]","");
                 reviewCount = reviewCount.replaceAll("[^0-9]","");
-                System.out.println("변경 전 productId : " + productId);
-                productId = productId.replaceAll("[^0-9]","");
-                System.out.println("변경 후 productId : " + productId);
 
                 /* 상품 정보 등록 */
                 CoupangProductInfo coupangProductInfo =  CoupangProductInfo.builder()
                         .productId(Long.parseLong(productId))
+                        .vendorId(vendorId.isEmpty() ? 0 : Long.parseLong(vendorId))
+                        .itemId(itemId.isEmpty() ? 0 : Long.parseLong(itemId))
+                        .productRank(productRank)
                         .keyword(keyword)
                         .type(0)
                         .productName(productName)
@@ -140,6 +152,7 @@ public class WebCrawlingService {
                         .reviewCount(reviewCount.isEmpty() ? 0 : Integer.parseInt(reviewCount))
                         .reward(rewardInfo)
                         .delivery(deliveryInfo)
+                        .productUrl(productUrl)
                         .build();
 
                 coupangProductInfoList.add(coupangProductInfo);

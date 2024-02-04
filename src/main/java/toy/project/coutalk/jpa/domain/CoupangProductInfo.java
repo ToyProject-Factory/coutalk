@@ -3,6 +3,7 @@ package toy.project.coutalk.jpa.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
+import toy.project.coutalk.jpa.domain.idclass.CoupangProductInfoId;
 
 
 @Entity
@@ -11,12 +12,24 @@ import org.antlr.v4.runtime.misc.NotNull;
 @AllArgsConstructor
 @ToString
 @Builder
+@IdClass(CoupangProductInfoId.class)
 @Table(name = "coupang_product_info")
 public class CoupangProductInfo {
 
     /* 상품코드 */
     @Id
     private long productId;
+
+    /* 상품 세부 코드 1 */
+    @Id
+    private long vendorId;
+
+    /* 상품 세부 코드 2 */
+    @Id
+    private long itemId;
+
+    /* 현재 판매 순위 */
+    private String productRank;
 
     /* 상품 타입 :
      0 : 키워드

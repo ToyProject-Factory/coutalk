@@ -30,7 +30,7 @@ public class GoogleController {
     public void googleSurvey(@RequestBody KakaoUser kakaoUser){
         System.out.println("kakaoUser : " + kakaoUser);
         /* 사용자 정보 조회 */
-        String kakaoId = kakaoUserService.findKakaoId(kakaoUser.getKakaoId());
+        String kakaoId = kakaoUserService.findKakaoId(kakaoUser.getKakaoId()).getKakaoId();
 
         /* 개인정보 수집 및 사용 동의
         * 0 - 미동의

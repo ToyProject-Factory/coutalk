@@ -35,6 +35,8 @@ public class CoupangServiceImpl implements CoupangService {
 
             if (etc.equals("split")) {
                 System.out.println("상품 수집 키워드 : "+ keyword);
+
+                /* 키워드 상품 등록 */
                 coupangProductInfoRepository.saveAll(webCrawlingService.getItemInfo(keyword));
             }
         });
