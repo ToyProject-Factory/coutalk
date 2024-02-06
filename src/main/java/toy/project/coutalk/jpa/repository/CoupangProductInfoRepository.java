@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface CoupangProductInfoRepository extends JpaRepository<CoupangProductInfo, Long> {
     List<CoupangProductInfo> findByKeyword(String keyword);
+    CoupangProductInfo findByProductIdAndItemId(long productId, long itemId);
 }

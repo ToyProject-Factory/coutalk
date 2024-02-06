@@ -101,7 +101,6 @@ public class WebCrawlingService {
 
                 //todo : 차후 데이터의 활용도에 맞게 수정
                 String productId = product.select("a.search-product-link").attr("data-product-id");
-                String vendorId = product.select("a.search-product-link").attr("data-vendor-item-id");
                 String itemId = product.select("a.search-product-link").attr("data-item-id");
                 String productRank = product.select("span.number").text().trim();
                 String productName = product.select("div.name").text().trim();
@@ -118,7 +117,6 @@ public class WebCrawlingService {
                 System.out.println('-' + "-".repeat(39));
                 System.out.println("Product Name: " + productName);
                 System.out.println("Product Id: " + productId);
-                System.out.println("vendorId : " + vendorId);
                 System.out.println("itemId : " + itemId);
                 System.out.println("Original price: " + originalPrice);
                 System.out.println("Sale price: " + salePrice);
@@ -137,7 +135,6 @@ public class WebCrawlingService {
                 /* 상품 정보 등록 */
                 CoupangProductInfo coupangProductInfo =  CoupangProductInfo.builder()
                         .productId(Long.parseLong(productId))
-                        .vendorId(vendorId.isEmpty() ? 0 : Long.parseLong(vendorId))
                         .itemId(itemId.isEmpty() ? 0 : Long.parseLong(itemId))
                         .productRank(productRank)
                         .keyword(keyword)

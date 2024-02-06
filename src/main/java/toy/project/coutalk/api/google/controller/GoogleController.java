@@ -14,6 +14,7 @@ import toy.project.coutalk.service.kakao.KakaoUserService;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,7 +31,7 @@ public class GoogleController {
     public void googleSurvey(@RequestBody KakaoUser kakaoUser){
         System.out.println("kakaoUser : " + kakaoUser);
         /* 사용자 정보 조회 */
-        String kakaoId = kakaoUserService.findKakaoId(kakaoUser.getKakaoId()).getKakaoId();
+        KakaoUser checkUser = kakaoUserService.findKakaoId(kakaoUser.getKakaoId());
 
         /* 개인정보 수집 및 사용 동의
         * 0 - 미동의
@@ -38,7 +39,7 @@ public class GoogleController {
         * */
         if(kakaoUser.getIsPersonalSecurity() == 0){
             /* 등록된 사용자가 있으면 사용자 정보 수정 */
-            if(!kakaoId.isEmpty()){
+            if(checkUser != null){
                 /* 카카오 사용자 정보 수정 */
                 kakaoUserService.saveKakaoUser(kakaoUser);
             }

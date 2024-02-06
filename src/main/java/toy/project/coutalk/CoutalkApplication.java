@@ -13,6 +13,6 @@ import toy.project.coutalk.jpa.repository.CoupangProductInfoRepository;
 public class CoutalkApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CoutalkApplication.class, args);
+                SpringApplication.run(CoutalkApplication.class, args);
     }
 }

@@ -22,10 +22,6 @@ public class CoupangProductInfo {
 
     /* 상품 세부 코드 1 */
     @Id
-    private long vendorId;
-
-    /* 상품 세부 코드 2 */
-    @Id
     private long itemId;
 
     /* 현재 판매 순위 */
@@ -78,4 +74,8 @@ public class CoupangProductInfo {
 
     /* 쿠팡 상품 URL */
     private String productUrl;
+
+    public void updateLowPrice(int lowPrice){
+        this.lowPrice = lowPrice;
+    }
 }
