@@ -94,15 +94,12 @@ public class WebCrawlingService {
 
             Elements products = document.select("li.search-product");
             for (Element product : products) {
-                if (!product.select(".search-product__ad-badge").isEmpty()) {
+                //광고 및 랭킹 10위권 밖의 제품을 제외.
+                if (!product.select(".search-product__ad-badge").isEmpty() || product.select("span.number").isEmpty()) {
                     continue;
                 }
-                /* 키워드 랭킹만 가져오기 */
-                if(product.select("span.number").isEmpty()){
-                    continue;
-                }
-                //todo : 차후 데이터의 활용도에 맞게 수정
 
+                //todo : 차후 데이터의 활용도에 맞게 수정
                 String productId = product.select("a.search-product-link").attr("data-product-id");
                 String vendorId = product.select("a.search-product-link").attr("data-vendor-item-id");
                 String itemId = product.select("a.search-product-link").attr("data-item-id");
