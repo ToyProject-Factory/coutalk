@@ -15,9 +15,9 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Service;
-import toy.project.coutalk.coupang.dto.CoupangItemDTO;
-import toy.project.coutalk.coupang.domain.CoupangItem;
-import toy.project.coutalk.coupang.repository.CoupangItemRepository;
+import toy.project.coutalk.coupang.dto.CoupangProductDTO;
+import toy.project.coutalk.coupang.domain.CoupangProduct;
+import toy.project.coutalk.coupang.repository.CoupangProductRepository;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -36,9 +36,9 @@ import java.util.Optional;
  */
 @Service
 @RequiredArgsConstructor
-public class CoupangItemService {
+public class CoupangProductService {
 
-    private final CoupangItemRepository coupangItemRepository;
+    private final CoupangProductRepository coupangProductRepository;
     /**
      *  셋업.
      *
@@ -48,7 +48,7 @@ public class CoupangItemService {
      *
      * @return WebDriver 객체.
      */
-    private WebDriver setDriver() {
+    public WebDriver getWebDriver() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         //options.addArguments("--headless=new");
@@ -74,9 +74,9 @@ public class CoupangItemService {
      * @return 현재는 콘솔 출력으로 나타남.
      * @throws NullPointerException WebDriver 상태를 확인
      */
-    public List<CoupangItemDTO> getItemList(String keyword) throws NullPointerException{
-        WebDriver driver = setDriver();
-        List<CoupangItemDTO> list = new ArrayList<CoupangItemDTO>();
+    public List<CoupangProductDTO> getProductList(String keyword) throws NullPointerException{
+        WebDriver driver = getWebDriver();
+        List<CoupangProductDTO> list = new ArrayList<CoupangProductDTO>();
 
             //todo : 쿠팡 이 외에 다른 사이트도 추가 가능성 있기에 차후 변경
             driver.get("https://www.coupang.com/np/search?component=&q=" + keyword + "&channel=relate");
@@ -101,7 +101,7 @@ public class CoupangItemService {
                 //상품 옵션 ID
                 String itemId = product.select("a").attr("data-item-id").trim();
 
-                CoupangItemDTO dto = new CoupangItemDTO();
+                CoupangProductDTO dto = new CoupangProductDTO();
                 dto.setItemId(itemId);
                 dto.setProductId(productId);
                 dto.setRating(rating);
@@ -126,8 +126,8 @@ public class CoupangItemService {
      * @param  productId 제품의 노출 ID
      * @return CoupangItemDTO.
      */
-    public Optional<CoupangItemDTO>  getItemInfo(String itemId, String productId) {
-        Optional<CoupangItem> optional = coupangItemRepository.findByItemIdAndProductId(itemId, productId);
+    public Optional<CoupangProductDTO> getProduct(String itemId, String productId) {
+        Optional<CoupangProduct> optional = coupangProductRepository.findByItemIdAndProductId(itemId, productId);
 
         return optional.map(this::convertToDTO);
     }
@@ -141,16 +141,16 @@ public class CoupangItemService {
      * @param  dto 제품의 정보를 가진 CoupangItemDTO 통해 데이터 저장.
      * @return CoupangItemDTO.
      */
-    public CoupangItemDTO setItemInfo(CoupangItemDTO dto) {
-        CoupangItem entity = CoupangItem.builder()
+    public CoupangProductDTO setProduct(CoupangProductDTO dto) {
+        CoupangProduct entity = CoupangProduct.builder()
                 .itemId(dto.getItemId())
                 .productId(dto.getProductId())
                 .originalPrice(dto.getOriginalPrice())
                 .salePrice(dto.getSalePrice())
                 .rating(dto.getRating())
                 .build();
-        if(!existsItemInfo(dto.getItemId(), dto.getProductId())){
-            entity = coupangItemRepository.save(entity);
+        if(!existsProduct(dto.getItemId(), dto.getProductId())){
+            entity = coupangProductRepository.save(entity);
         }
         return convertToDTO(entity);
     }
@@ -164,9 +164,9 @@ public class CoupangItemService {
      * @param  itemId 제품의 상세 옵션 적용 ID.
      * @param  productId 제품의 노출 ID
      */
-    public void deleteItemInfo(String itemId, String productId) {
-        if(existsItemInfo(itemId, productId)){
-            coupangItemRepository.deleteByItemIdAndProductId(itemId, productId);
+    public void deleteProduct(String itemId, String productId) {
+        if(existsProduct(itemId, productId)){
+            coupangProductRepository.deleteByItemIdAndProductId(itemId, productId);
         }
     }
     /**
@@ -180,8 +180,8 @@ public class CoupangItemService {
      * @param  productId 제품의 노출 ID
      * @return boolean.
      */
-    public boolean existsItemInfo(String itemId, String productId) {
-        return coupangItemRepository.existsByItemIdAndProductId(itemId, productId);
+    public boolean existsProduct(String itemId, String productId) {
+        return coupangProductRepository.existsByItemIdAndProductId(itemId, productId);
     }
     /**
      *  Url 가져오기
@@ -194,15 +194,9 @@ public class CoupangItemService {
      * @param  productId 제품의 노출 ID
      * @return String.
      */
-    public String getItemUrl(String itemId, String productId) {
+    public String getProductUrl(String itemId, String productId) {
         return "https://www.coupang.com/vp/products/"+ productId + "?itemId=" + itemId;
     }
-
-    public void showUrl(String url) {
-        WebDriver driver = setDriver();
-        driver.get(url);
-    }
-
     /**
      *  Entity를 DTO로 변환.
      *
@@ -213,7 +207,7 @@ public class CoupangItemService {
      * @param  entity DB에 저장되어 있는 제품의 상세 데이터.
      * @return CoupangItemDTO.
      */
-    public CoupangItemDTO convertToDTO(CoupangItem entity){
-        return new CoupangItemDTO(entity);
+    public CoupangProductDTO convertToDTO(CoupangProduct entity){
+        return new CoupangProductDTO(entity);
     }
 }

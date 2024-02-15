@@ -2,7 +2,7 @@ package toy.project.coutalk.coupang.repository;
 
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import toy.project.coutalk.coupang.domain.CoupangItem;
+import toy.project.coutalk.coupang.domain.CoupangProduct;
 import java.util.Optional;
 
 /**
@@ -15,7 +15,7 @@ import java.util.Optional;
  * @version 0.0.1
  * @author nuclearmonkey21
  */
-public interface CoupangItemRepository extends JpaRepository<CoupangItem, String> {
+public interface CoupangProductRepository extends JpaRepository<CoupangProduct, String> {
     /**
      *  제품 찾기.
      *
@@ -26,7 +26,7 @@ public interface CoupangItemRepository extends JpaRepository<CoupangItem, String
      * @param  productId 제품의 노출 ID
      * @return Optional<CoupangItem>
      */
-    Optional<CoupangItem> findByItemIdAndProductId(String itemId, String productId);
+    Optional<CoupangProduct> findByItemIdAndProductId(String itemId, String productId);
 
     /**
      *  CoupangItemRepository.

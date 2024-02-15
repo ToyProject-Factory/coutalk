@@ -8,13 +8,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import toy.project.coutalk.coupang.domain.CoupangItem;
+import toy.project.coutalk.coupang.domain.CoupangProduct;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
-public class CoupangItemDTO {
+public class CoupangProductDTO {
 
     private int id;
 
@@ -44,7 +44,7 @@ public class CoupangItemDTO {
     @Pattern(regexp = "^[\\\\d]?$", message = "rating is invalid.")
     private String rating;
 
-    public CoupangItemDTO(CoupangItem entity){
+    public CoupangProductDTO(CoupangProduct entity){
         this.id = entity.getId();
         this.itemId = entity.getItemId();
         this.productId = entity.getProductId();

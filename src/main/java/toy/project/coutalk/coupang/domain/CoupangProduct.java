@@ -9,8 +9,8 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "items")
-public class CoupangItem {
+@Table(name = "coupang_product")
+public class CoupangProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id",  nullable = false)
