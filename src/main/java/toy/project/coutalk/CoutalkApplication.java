@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import toy.project.coutalk.controller.CoutalkController;
 import toy.project.coutalk.jpa.repository.CoupangProductInfoRepository;
 
-@EntityScan(basePackages = {"toy.project.coutalk.jpa.domain", "toy.project.coutalk.api.coupang.domain"})
+@EntityScan(basePackages = {"toy.project.coutalk.jpa.domain", "toy.project.coutalk.coupang.domain"})
 @SpringBootApplication
 public class CoutalkApplication {
 

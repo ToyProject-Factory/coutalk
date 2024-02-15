@@ -1,11 +1,13 @@
-package toy.project.coutalk.api.coupang;
+package toy.project.coutalk.coupang;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import toy.project.coutalk.api.coupang.dto.CoupangItemDTO;
-import toy.project.coutalk.api.coupang.service.CoupangItemService;
+import toy.project.coutalk.coupang.dto.CoupangItemDTO;
+import toy.project.coutalk.coupang.service.CoupangItemService;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,11 +40,7 @@ class CoupangItemServiceTest {
         CoupangItemDTO dto = list.get(0);
 
         coupangItemService.setItemInfo(dto);
-
-        if(coupangItemService.existsItemInfo(dto.getItemId(), dto.getProductId())){
-            coupangItemService.deleteItemInfo(dto.getItemId(), dto.getProductId());
-        }
-
+        coupangItemService.deleteItemInfo(dto.getItemId(), dto.getProductId());
 
         System.out.println("-".repeat(20) + "SET" + "-".repeat(20));
         Optional<CoupangItemDTO> optional = coupangItemService.getItemInfo(dto.getItemId(), dto.getProductId());
@@ -53,6 +51,7 @@ class CoupangItemServiceTest {
         }
 
         dto = optional.get();
+
         System.out.println("-".repeat(20) + "GET" + "-".repeat(20));
         System.out.println("Product Id: " + dto.getProductId());
         System.out.println("itemId: " + dto.getItemId());
@@ -61,6 +60,7 @@ class CoupangItemServiceTest {
         System.out.println("Star rating: " + dto.getRating());
 
         coupangItemService.deleteItemInfo(dto.getItemId(), dto.getProductId());
+
 
     }
 

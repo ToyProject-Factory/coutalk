@@ -1,4 +1,4 @@
-package toy.project.coutalk.api.coupang.dto;
+package toy.project.coutalk.coupang.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import toy.project.coutalk.api.coupang.domain.CoupangItem;
+import toy.project.coutalk.coupang.domain.CoupangItem;
 
 @Getter
 @Setter

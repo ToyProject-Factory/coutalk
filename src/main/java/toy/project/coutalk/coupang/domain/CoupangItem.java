@@ -1,4 +1,4 @@
-package toy.project.coutalk.api.coupang.domain;
+package toy.project.coutalk.coupang.domain;
 
 import jakarta.persistence.*;
 import lombok.*;

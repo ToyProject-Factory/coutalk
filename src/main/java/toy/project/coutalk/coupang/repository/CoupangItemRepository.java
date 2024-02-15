@@ -1,7 +1,8 @@
-package toy.project.coutalk.api.coupang.repository;
+package toy.project.coutalk.coupang.repository;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import toy.project.coutalk.api.coupang.domain.CoupangItem;
+import toy.project.coutalk.coupang.domain.CoupangItem;
 import java.util.Optional;
 
 /**
@@ -36,6 +37,7 @@ public interface CoupangItemRepository extends JpaRepository<CoupangItem, String
      * @param  itemId 제품을 찾기위한 검색어.
      * @param  productId 제품의 노출 ID
      */
+    @Transactional
     void deleteByItemIdAndProductId(String itemId, String productId);
 
     /**

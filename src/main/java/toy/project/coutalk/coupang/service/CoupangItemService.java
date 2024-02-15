@@ -1,4 +1,4 @@
-package toy.project.coutalk.api.coupang.service;
+package toy.project.coutalk.coupang.service;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -15,9 +15,9 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Service;
-import toy.project.coutalk.api.coupang.dto.CoupangItemDTO;
-import toy.project.coutalk.api.coupang.domain.CoupangItem;
-import toy.project.coutalk.api.coupang.repository.CoupangItemRepository;
+import toy.project.coutalk.coupang.dto.CoupangItemDTO;
+import toy.project.coutalk.coupang.domain.CoupangItem;
+import toy.project.coutalk.coupang.repository.CoupangItemRepository;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -115,7 +115,6 @@ public class CoupangItemService {
 
         return list;
     }
-
     /**
      *  DB 검색.
      *
@@ -150,7 +149,9 @@ public class CoupangItemService {
                 .salePrice(dto.getSalePrice())
                 .rating(dto.getRating())
                 .build();
-        entity = coupangItemRepository.save(entity);
+        if(!existsItemInfo(dto.getItemId(), dto.getProductId())){
+            entity = coupangItemRepository.save(entity);
+        }
         return convertToDTO(entity);
     }
     /**
@@ -162,12 +163,12 @@ public class CoupangItemService {
      *
      * @param  itemId 제품의 상세 옵션 적용 ID.
      * @param  productId 제품의 노출 ID
-     * @return CoupangItemDTO.
      */
     public void deleteItemInfo(String itemId, String productId) {
-        coupangItemRepository.deleteByItemIdAndProductId(productId, itemId);
+        if(existsItemInfo(itemId, productId)){
+            coupangItemRepository.deleteByItemIdAndProductId(itemId, productId);
+        }
     }
-
     /**
      *  DB 확인.
      *
@@ -180,11 +181,30 @@ public class CoupangItemService {
      * @return boolean.
      */
     public boolean existsItemInfo(String itemId, String productId) {
-        return coupangItemRepository.existsByItemIdAndProductId(productId, itemId);
+        return coupangItemRepository.existsByItemIdAndProductId(itemId, productId);
+    }
+    /**
+     *  Url 가져오기
+     *
+     *  <p>
+     *      itemId와 productId를 사용하여 아이템의 Url을 획득
+     *  </p>
+     *
+     * @param  itemId 제품의 상세 옵션 적용 ID.
+     * @param  productId 제품의 노출 ID
+     * @return String.
+     */
+    public String getItemUrl(String itemId, String productId) {
+        return "https://www.coupang.com/vp/products/"+ productId + "?itemId=" + itemId;
+    }
+
+    public void showUrl(String url) {
+        WebDriver driver = setDriver();
+        driver.get(url);
     }
 
     /**
-     *  DB 삭제.
+     *  Entity를 DTO로 변환.
      *
      *  <p>
      *      CoupangItem을 CoupangItemDTO로 변환한다.
